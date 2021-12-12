@@ -1,10 +1,10 @@
 const Todo = ({todos, setTodos, text, todo}) => {
   const deleteHandler = () => {
-    setTodos(todos.filter((el) => el.id !== todo.id))// all todos except 'this' one
+    setTodos(todos.filter((el) => el.taskId !== todo.taskId))// all todos except 'this' one
   }
   const completeHandler = () => {
     setTodos(todos.map((item) => {
-        if (item.id === todo.id) {
+        if (item.taskId === todo.taskId) {
             return {
                 ...item, //carry over existing properties of 'item'
                 completed: true // update 'completed' property
@@ -16,7 +16,7 @@ const Todo = ({todos, setTodos, text, todo}) => {
   }
   return (
     <div className="todo">
-      <li className={`todo-item ${todo.completed ? 'completed' : ''}`}>{text}</li>
+      <li className={`todo-item ${todo.isCompleted ? 'completed' : ''}`}>{text}</li>
       <button onClick={completeHandler} className="complete-btn">
         <i className="fas fa-check"></i>
       </button>

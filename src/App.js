@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';// 'React' is redundant: already auto-imported
+import axios from 'axios';
 
 // components
 import Form from './components/Form'
@@ -30,12 +31,16 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todos, status]);
 
+  useEffect(() => {
+    axios.get('https://todo-maxthunder-svc.herokuapp.com/tasks')
+    .then(response => setTodos(response.data));
+  }, []);
+
   return (
     <div className="App">
       <header>
         <h1>Max Thunder's Todo-List {inputText}</h1>
       </header>
-      
       <Form 
         inputText={inputText} 
         setInputText={setInputText} 

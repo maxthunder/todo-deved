@@ -11,7 +11,7 @@ const TodoList = ({ todos, setTodos, filteredTodos }) => {
                     <Todo
                         todos={todos}
                         setTodos={setTodos}
-                        text={todo.text}
+                        text={todo.description}
                         key={todo.id} // 'key' is required when using map() to ensure uniqueness
                         todo={todo}
                     />

@@ -1,10 +1,10 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';// 'React' is redundant: already auto-imported
-import axios from 'axios';
 
 // components
 import Form from './components/Form'
 import TodoList from './components/TodoList'
+import ApiService from './services/ApiService';
 
 function App() {
   const [inputText, setInputText] = useState("");
@@ -15,10 +15,10 @@ function App() {
   const filterHandler = () => {
     switch(status) {
       case 'completed':
-        setFilteredTodos(todos.filter((todo) => todo.completed === true));
+        setFilteredTodos(todos.filter((todo) => todo.isCompleted === true));
         break;
       case 'uncompleted':
-        setFilteredTodos(todos.filter((todo) => todo.completed === false));
+        setFilteredTodos(todos.filter((todo) => todo.isCompleted === false));
         break;
       default:
         setFilteredTodos(todos);
@@ -32,8 +32,7 @@ function App() {
   }, [todos, status]);
 
   useEffect(() => {
-    axios.get('https://todo-maxthunder-svc.herokuapp.com/tasks')
-    .then(response => setTodos(response.data));
+    ApiService.getTodos().then(response => setTodos(response.data));
   }, []);
 
   return (

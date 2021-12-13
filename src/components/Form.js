@@ -1,4 +1,5 @@
 import React from 'react'
+import ApiService from '../services/ApiService';
 
 const Form = ({ inputText, setInputText, todos, setTodos, setStatus }) => {
     const inputTextHandler = (event) => {
@@ -7,11 +8,13 @@ const Form = ({ inputText, setInputText, todos, setTodos, setStatus }) => {
     const submitTodoHandler = (event) => {
         event.preventDefault();
         if (inputText !== '') {
-            setTodos([
-                ...todos, // copy over existing todos
-                { text: inputText, completed: false, id: Math.random() * 1000 } // add new todo (if any)
-            ])
-            setInputText("")// reset input text
+            const newTodo = { description: inputText, isCompleted: false };
+            ApiService.addTodo(newTodo)
+                .then(response => {
+                    ApiService.getTodos()// TODO : update golang svc to return added task instead of msg.
+                        .then(response => setTodos(response.data))
+                    setInputText("")
+                })
         }
     }
     const statusHandler = (event) => {

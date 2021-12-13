@@ -1,7 +1,7 @@
 import React from 'react'
-
-// components
 import Todo from './Todo'
+
+// const TASK_PATH = 'https://todo-maxthunder-svc.herokuapp.com/tasks';
 
 const TodoList = ({ todos, setTodos, filteredTodos }) => {
     return (
@@ -12,7 +12,7 @@ const TodoList = ({ todos, setTodos, filteredTodos }) => {
                         todos={todos}
                         setTodos={setTodos}
                         text={todo.description}
-                        key={todo.id} // 'key' is required when using map() to ensure uniqueness
+                        key={Math.random().toString(36).substr(2, 9)} // 'key' is required when using map() to ensure uniqueness
                         todo={todo}
                     />
                 ))}

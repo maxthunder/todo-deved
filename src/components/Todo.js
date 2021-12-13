@@ -1,13 +1,20 @@
+import ApiService from "../services/ApiService";
+
 const Todo = ({todos, setTodos, text, todo}) => {
   const deleteHandler = () => {
-    setTodos(todos.filter((el) => el.taskId !== todo.taskId))// all todos except 'this' one
+    const deleteThisTodo = todos.filter((el) => el.taskId === todo.taskId)[0];
+    console.log(deleteThisTodo.taskId)
+    ApiService.deleteTodo(deleteThisTodo.taskId).then(response => {
+      setTodos(todos.filter((el) => el.taskId !== todo.taskId))// use all todos except 'this' one
+      console.log("Todo '" + deleteThisTodo.description + "' deleted.")
+    })
   }
   const completeHandler = () => {
     setTodos(todos.map((item) => {
         if (item.taskId === todo.taskId) {
             return {
                 ...item, //carry over existing properties of 'item'
-                completed: true // update 'completed' property
+                isCompleted: true // update 'isCompleted' property
             }
         }
         return item;// return each other item
